@@ -2,7 +2,7 @@ A collection of examples for spirit
 
 Some of the examples are in other repositories, but they are all categorized here. Some of them may overlap into other categories.
 
-### spirit-router misc examples
+## spirit-router misc examples
 ##### Sending a file
 [Example](https://github.com/spirit-js/spirit-router/blob/master/examples/sending_file.js)
 
@@ -21,7 +21,7 @@ The caching is very basic and has no idea of time / diffing. (There is probably 
 The example takes the socket.io chat example as part of socket.io's tutorial, and uses spirit and spirit-router instead of Express.
 
 
-### Using Express middleware with spirit
+## Using Express middleware with spirit
 
 All these examples use [spirit-express](https://github.com/spirit-js/spirit-express).
 
@@ -53,10 +53,10 @@ For [multer](https://www.npmjs.com/package/multer) module. The example sets a ro
 For [passport](https://www.npmjs.com/package/passport) module. In the example it uses LocalStrategy to auth, the auth is very basic as it's just an example. But the idea of how to set up passport is shown.
 
 ##### webpack-dev-middleware & webpack-hot-middleware
-See Server rendering in React, Redux section.
+See [Server rendering in React, Redux section](https://github.com/spirit-js/examples#server-rendering-uses-react-redux-webpack).
 
 
-### React, Redux
+## React, Redux
 
 ##### Server rendering (uses react, redux, webpack)
 This example comes from Redux's example [Universal](https://github.com/reactjs/redux/blob/master/docs/introduction/Examples.md#universal). It changes the use of Express to spirit. webpack -dev and -hot middleware are wrapped with spirit-express to work. The example doesn't use spirit-router (as the original example doesn't do much routing), but can be used just the same.
