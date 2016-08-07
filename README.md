@@ -64,6 +64,6 @@ See [Server rendering in React, Redux section](#server-rendering-uses-react-redu
 ## React, Redux
 
 #### Server rendering (uses react, redux, webpack)
-[Example]()
+[Example](https://github.com/spirit-js/examples/tree/master/react/universal-redux)
 
-This example comes from Redux's example [Universal](https://github.com/reactjs/redux/blob/master/docs/introduction/Examples.md#universal). It changes the use of Express to spirit. webpack -dev and -hot middleware are wrapped with spirit-express to work. The example doesn't use spirit-router (as the original example doesn't do much routing), but can be used just the same.
+This example comes from Redux's example [Universal](https://github.com/reactjs/redux/blob/master/docs/introduction/Examples.md#universal). It changes the use of Express to spirit with very little modification, webpack -dev and -hot middleware are wrapped with spirit-express to work.
