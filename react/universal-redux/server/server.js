@@ -1,7 +1,9 @@
 /* eslint-disable no-console, no-use-before-define */
 
 import path from 'path'
-import Express from 'express'
+import spirit from 'spirit'
+import express from 'spirit-express'
+import http from 'http'
 import qs from 'qs'
 
 import webpack from 'webpack'
@@ -17,42 +19,45 @@ import configureStore from '../common/store/configureStore'
 import App from '../common/containers/App'
 import { fetchCounter } from '../common/api/counter'
 
-const app = new Express()
 const port = 3000
+
 
 // Use this middleware to set up hot module reloading via webpack.
 const compiler = webpack(webpackConfig)
-app.use(webpackDevMiddleware(compiler, { noInfo: true, publicPath: webpackConfig.output.publicPath }))
-app.use(webpackHotMiddleware(compiler))
+
+const middleware = [
+  express(webpackDevMiddleware(compiler, { noInfo: true, publicPath: webpackConfig.output.publicPath })),
+  express(webpackHotMiddleware(compiler))
+]
 
 // This is fired every time the server side receives a request
-app.use(handleRender)
-
-function handleRender(req, res) {
+function handleRender(req) {
   // Query our mock API asynchronously
-  fetchCounter(apiResult => {
-    // Read the counter from the request, if provided
-    const params = qs.parse(req.query)
-    const counter = parseInt(params.counter, 10) || apiResult || 0
+  return new Promise((resolve, reject) => {
+    fetchCounter(apiResult => {
+      // Read the counter from the request, if provided
+      const params = qs.parse(req.query)
+      const counter = parseInt(params.counter, 10) || apiResult || 0
 
-    // Compile an initial state
-    const preloadedState = { counter }
+      // Compile an initial state
+      const preloadedState = { counter }
 
-    // Create a new Redux store instance
-    const store = configureStore(preloadedState)
+      // Create a new Redux store instance
+      const store = configureStore(preloadedState)
 
-    // Render the component to a string
-    const html = renderToString(
-      <Provider store={store}>
-        <App />
-      </Provider>
-    )
+      // Render the component to a string
+      const html = renderToString(
+          <Provider store={store}>
+          <App />
+          </Provider>
+      )
 
-    // Grab the initial state from our Redux store
-    const finalState = store.getState()
+      // Grab the initial state from our Redux store
+      const finalState = store.getState()
 
-    // Send the rendered page back to the client
-    res.send(renderFullPage(html, finalState))
+      // Send the rendered page back to the client
+      resolve(spirit.node.response(renderFullPage(html, finalState)))
+    })
   })
 }
 
@@ -74,7 +79,8 @@ function renderFullPage(html, preloadedState) {
     `
 }
 
-app.listen(port, (error) => {
+const server = http.createServer(spirit.node.adapter(handleRender, middleware))
+server.listen(port, (error) => {
   if (error) {
     console.error(error)
   } else {

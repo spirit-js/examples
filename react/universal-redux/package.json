@@ -17,7 +17,8 @@
   "dependencies": {
     "babel-polyfill": "^6.3.14",
     "babel-register": "^6.4.3",
-    "express": "^4.13.3",
+    "spirit": "^0.0.12",
+    "spirit-express": "^0.1.0",
     "qs": "^4.0.0",
     "react": "^0.14.7",
     "react-dom": "^0.14.7",
